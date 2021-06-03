@@ -53,6 +53,10 @@ form button:hover {
   transition: 0.3s ease background;
 }
 
+.center-h2 {
+  text-align: center;
+}
+
 .error {
   background: #f02b63;
   box-sizing: border-box;

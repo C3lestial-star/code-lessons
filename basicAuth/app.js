@@ -4,18 +4,24 @@ const express = require('express');
 const createError = require('http-errors');
 const logger = require('morgan');
 const favicon = require('serve-favicon');
-
+const app = express();
 const cookieParser = require('cookie-parser');
 const hbs = require('hbs');
 const mongoose = require('mongoose');
+require('./configs/session-config')(app)
+
 
 // Set up the database
 require('./configs/db.config');
 
+const MongoStore = require('connect-mongo');
+
+
 // Routers
 const indexRouter = require('./routes/index.routes');
+const authRouter = require('./routes/auth.routes');
 
-const app = express();
+
 
 // Express View engine setup
 
@@ -35,6 +41,7 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 
 // Routes middleware
 app.use('/', indexRouter);
+app.use('/', authRouter); 
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => next(createError(404)));
